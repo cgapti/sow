@@ -1,9 +1,9 @@
 package com.sow.service;
 
 import com.sow.exception.SOWException;
-import com.sow.model.JSON.AddSOWInfo;
+import com.sow.model.JSON.SOWInfo;
 
 public interface SOWService {
 
-	String addSOW(AddSOWInfo addSOW)throws SOWException;
+	String addSOW(SOWInfo addSOW)throws SOWException;
 }

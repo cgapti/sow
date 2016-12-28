@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sow.exception.SOWException;
-import com.sow.model.JSON.AddSOWInfo;
+import com.sow.model.JSON.SOWInfo;
 import com.sow.service.SOWService;
 
 @RestController
@@ -22,7 +22,7 @@ public class SOWRestController {
 	
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/addSOW", method = RequestMethod.POST, headers = "Accept=application/json")	
-	public ResponseEntity<String> addSOW(@RequestBody AddSOWInfo addSOW)
+	public ResponseEntity<String> addSOW(@RequestBody SOWInfo addSOW)
 			throws SOWException {
 		System.out
 				.println("Add SOWController - Add SOW method starts");

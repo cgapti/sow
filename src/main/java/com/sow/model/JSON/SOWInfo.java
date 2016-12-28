@@ -3,7 +3,7 @@ package com.sow.model.JSON;
 import java.io.Serializable;
 import java.util.Date;
 
-public class AddSOWInfo implements Serializable {
+public class SOWInfo implements Serializable {
 
 	/**
 	 * 

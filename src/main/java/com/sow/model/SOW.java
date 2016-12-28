@@ -9,8 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+
 @Table(name = "SOW_MS")
-public class AddSOW implements Serializable {
+public class SOW implements Serializable {
 
 	private static final long serialVersionUID = 8704535406621494434L;
 

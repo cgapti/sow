@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.sow.dao.Impl.SOWDAOImpl;
 import com.sow.exception.SOWException;
-import com.sow.model.AddSOW;
-import com.sow.model.JSON.AddSOWInfo;
+import com.sow.model.SOW;
+import com.sow.model.JSON.SOWInfo;
 import com.sow.service.SOWService;
 
 @Service("sowServiceImpl")
@@ -16,16 +16,16 @@ public class SOWServiceImpl implements SOWService {
 	@Autowired
 	private SOWDAOImpl sowDAOImpl;;
 	
-	public String addSOW(AddSOWInfo addSOW) throws SOWException {
+	public String addSOW(SOWInfo addSOW) throws SOWException {
 		System.out.println("SowServiceImpl - addSOW method starts");
 		System.out.println("SowServiceImpl - addSOW method ends");
 		return sowDAOImpl.saveAddSOW(processSOWInfo(addSOW));
 		
 	}
 	
-	private AddSOW processSOWInfo(AddSOWInfo addSOWInfo) {
+	private SOW processSOWInfo(SOWInfo addSOWInfo) {
 		System.out.println("SowServiceImpl - processSOWInfo method starts");
-		AddSOW addSOW=new AddSOW();
+		SOW addSOW=new SOW();
 	
 		if (null != addSOWInfo) {
 			addSOW.setSowNo(addSOWInfo.getSowNo());

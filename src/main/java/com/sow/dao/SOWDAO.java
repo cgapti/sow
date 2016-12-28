@@ -1,11 +1,11 @@
 package com.sow.dao;
 
 import com.sow.exception.SOWException;
-import com.sow.model.AddSOW;
+import com.sow.model.SOW;
 
 public interface SOWDAO {
 	
-	String saveAddSOW(AddSOW addSOW)throws SOWException;
+	String saveAddSOW(SOW addSOW)throws SOWException;
 	
 
 }
