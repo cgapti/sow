@@ -21,6 +21,12 @@ public class Invoice implements Serializable {
 	@Column(name = "SOW_NO")
 	private String sowNo;
 	
+	@Column(name = "DIGITAL")
+	private String digital;
+	
+	@Column(name = "INV_REFERENCE")
+	private String invReference;
+	
 	@Column(name = "UTL_MONTH")
 	private String utlMonth;
 	
@@ -35,9 +41,6 @@ public class Invoice implements Serializable {
 	
 	@Column(name = "INVOICE_TOTAL_AMT")
 	private Integer invoiceTotalAmt;
-	
-	@Column(name = "INV_CUR")
-	private Integer invCur;
 	
 	@Column(name = "PAID_AMT")
 	private Integer paidAmt;
@@ -82,6 +85,22 @@ public class Invoice implements Serializable {
 		this.sowNo = sowNo;
 	}
 
+	public String getDigital() {
+		return digital;
+	}
+
+	public void setDigital(String digital) {
+		this.digital = digital;
+	}
+
+	public String getInvReference() {
+		return invReference;
+	}
+
+	public void setInvReference(String invReference) {
+		this.invReference = invReference;
+	}
+
 	public String getUtlMonth() {
 		return utlMonth;
 	}
@@ -120,14 +139,6 @@ public class Invoice implements Serializable {
 
 	public void setInvoiceTotalAmt(Integer invoiceTotalAmt) {
 		this.invoiceTotalAmt = invoiceTotalAmt;
-	}
-
-	public Integer getInvCur() {
-		return invCur;
-	}
-
-	public void setInvCur(Integer invCur) {
-		this.invCur = invCur;
 	}
 
 	public Integer getPaidAmt() {
@@ -205,5 +216,5 @@ public class Invoice implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 }

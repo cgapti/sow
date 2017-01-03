@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sow.exception.SOWException;
+import com.sow.model.Invoice;
 import com.sow.model.JSON.SOWInfo;
+import com.sow.service.InvoiceService;
 import com.sow.service.SOWService;
 
 @RestController
@@ -24,6 +27,9 @@ public class SOWRestController {
 	
 	@Autowired     
 	private SOWService sowServiceImpl;
+	
+	@Autowired     
+	private InvoiceService invoiceService;
 	
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/addSOW", method = RequestMethod.POST, headers = "Accept=application/json")	
@@ -78,6 +84,22 @@ public class SOWRestController {
 		System.out
 				.println("Currency Calculation SOWController - currCal method ends");
 		return new ResponseEntity<BigDecimal>(totalvalue, HttpStatus.OK);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	@RequestMapping(value = "/viewInvoice/{sowNo}", method = RequestMethod.GET, headers = "Accept=application/json")	
+	public ResponseEntity<List> viewInvoice(@PathVariable("sowNo") String sowNo)
+			throws SOWException {
+		System.out
+				.println("View Invocie Controller - View Invoice method starts");
+		
+		List<Invoice> invoices = invoiceService.viewInvoice(sowNo);
+		
+		System.out
+				.println("View Invocie Controller - View Invoice method ends");
+		
+		return ResponseEntity.ok(invoices);
 	}
 	
 }

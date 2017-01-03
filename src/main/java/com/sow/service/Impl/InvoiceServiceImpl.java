@@ -1,5 +1,7 @@
 package com.sow.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +16,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	private InvoiceDAOImpl invoiceDAOImpl;;
 	
-	public String viewInvoice(Invoice invoice) throws SOWException {
+	public List<Invoice> viewInvoice(String sowNo) throws SOWException {
 		System.out.println("SowServiceImpl - addSOW method starts");
 		System.out.println("SowServiceImpl - addSOW method ends");
-		return invoiceDAOImpl.viewInvoice(invoice);
+		return invoiceDAOImpl.viewInvoice(sowNo);
 	}
-
-	/*private Invoice processInvoiceInfo(Invoice invoice) {
-		Invoice invocie = new Invoice();
-		
-		if(invoiceInfo != null)
-			BeanUtils.copyProperties(invoiceInfo, invocie);
-		
-		return invocie;
-		
-	}*/
 
 }

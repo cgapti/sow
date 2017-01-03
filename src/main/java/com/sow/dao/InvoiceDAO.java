@@ -1,10 +1,12 @@
 package com.sow.dao;
 
+import java.util.List;
+
 import com.sow.exception.SOWException;
 import com.sow.model.Invoice;
 
 public interface InvoiceDAO {
 	
-	String viewInvoice(Invoice invoice)throws SOWException;
+	List<Invoice> viewInvoice(String sowNo)throws SOWException;
 
 }
