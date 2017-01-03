@@ -1,5 +1,8 @@
 package com.sow.service.Impl;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +39,7 @@ public class SOWServiceImpl implements SOWService {
 			addSOW.setEngmntModel(addSOWInfo.getEngmntModel());
 			addSOW.setProjectDtls(addSOWInfo.getProjectDtls());
 			addSOW.setResCount(addSOWInfo.getResCount());
-			addSOW.setSowValue(addSOWInfo.getSowValue());
-			addSOW.setSowCurrency(addSOWInfo.getSowCurrency());
+			addSOW.setValueMillion(addSOWInfo.getValueMillion());
 			addSOW.setSowValueInr(addSOWInfo.getSowValueInr());
 			addSOW.setSowValueMyr(addSOWInfo.getSowValueMyr());
 			addSOW.setSowValueSgd(addSOWInfo.getSowValueSgd());
@@ -59,5 +61,23 @@ public class SOWServiceImpl implements SOWService {
 		}
 		System.out.println("UserServiceImpl - processUserInfo method starts");
 		return addSOW;
+	}
+	
+	public List<SOWInfo> showAllSOW()throws SOWException {
+		System.out.println("SowServiceImpl - showAllSOW method starts");
+		return sowDAOImpl.fetchSOWData();
+		
+	}
+	
+	public List<SOWInfo> showSOW(String SOWno)throws SOWException {
+		System.out.println("SowServiceImpl - showSOW method starts");
+		return sowDAOImpl.fetchASOWData(SOWno);
+		
+	}
+	
+	public BigDecimal currRateCal(String curtype, BigDecimal curvalue) throws SOWException {
+		System.out.println("SowServiceImpl - currRateCal method starts");
+		return sowDAOImpl.currCalculation(curtype, curvalue);
+		
 	}
 }

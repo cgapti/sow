@@ -40,11 +40,8 @@ public class SOW implements Serializable {
 	@Column(name = "RES_COUNT")
 	private Integer resCount;
 
-	@Column(name = "SOW_VALUE")
-	private Integer sowValue;
-
-	@Column(name = "SOW_CURRENCY")
-	private String sowCurrency;
+	@Column(name = "VALUE_MILLION")
+	private Integer valueMillion;
 
 	@Column(name = "SOW_VALUE_SGD")
 	private Integer sowValueSgd;
@@ -164,20 +161,12 @@ public class SOW implements Serializable {
 		this.resCount = resCount;
 	}
 
-	public Integer getSowValue() {
-		return sowValue;
+	public Integer getValueMillion() {
+		return valueMillion;
 	}
 
-	public void setSowValue(Integer sowValue) {
-		this.sowValue = sowValue;
-	}
-
-	public String getSowCurrency() {
-		return sowCurrency;
-	}
-
-	public void setSowCurrency(String sowCurrency) {
-		this.sowCurrency = sowCurrency;
+	public void setValueMillion(Integer valueMillion) {
+		this.valueMillion = valueMillion;
 	}
 
 	public Integer getSowValueSgd() {

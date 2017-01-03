@@ -18,8 +18,7 @@ public class SOWInfo implements Serializable {
 	private String engmntModel;
 	private String projectDtls;
 	private Integer resCount;
-	private Integer sowValue;
-	private String sowCurrency;
+	private Integer valueMillion;
 	private Integer sowValueSgd;
 	private Integer SowValueMyr;
 	private Integer sowValueInr;
@@ -82,17 +81,11 @@ public class SOWInfo implements Serializable {
 	public void setResCount(Integer resCount) {
 		this.resCount = resCount;
 	}
-	public Integer getSowValue() {
-		return sowValue;
+	public Integer getValueMillion() {
+		return valueMillion;
 	}
-	public void setSowValue(Integer sowValue) {
-		this.sowValue = sowValue;
-	}
-	public String getSowCurrency() {
-		return sowCurrency;
-	}
-	public void setSowCurrency(String sowCurrency) {
-		this.sowCurrency = sowCurrency;
+	public void setValueMillion(Integer valueMillion) {
+		this.valueMillion = valueMillion;
 	}
 	public Integer getSowValueSgd() {
 		return sowValueSgd;
