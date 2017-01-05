@@ -2,7 +2,6 @@ package com.sow.dao.Impl;
 
 import java.util.List;
 
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
@@ -17,19 +16,45 @@ import com.sow.model.SOW;
 public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 		InvoiceDAO {
 
-	public List<Invoice> viewInvoice(String sowNo) throws SOWException {
+	public List<Invoice> viewInvoice(Invoice invoice) throws SOWException {
 		System.out.println("InvoiceDAOImpl - viewInvoice method starts");
 
 		Session session = null;
 		Transaction trans = null;
 		List<Invoice> results = null;
+		
 		try {
 			session = getSession();
 			trans = session.beginTransaction();
-			String sql = "SELECT * FROM INVOICE WHERE SOW_NO = '"
-					+ sowNo + "'";
+			
+			results = (List<Invoice>) session.createQuery(" from Invoice WHERE SOW_NO = '" + invoice.getSowNo() + "'").list();
+			
+			// results = (List<Invoice>)session.createSQLQuery("SELECT * FROM INVOICE WHERE SOW_NO = :sowNo").setParameter("sowNo", invoice.getSowNo()).list();
+			
+			/*results = (List<Invoice>) session.createSQLQuery(
+					"SELECT * FROM INVOICE WHERE SOW_NO = :sowNo")
+				    .addEntity(Invoice.class)
+				    .setParameter("sowNo", invoice.getSowNo()).list();*/
+			
+			/*String sql = "SELECT * FROM INVOICE WHERE SOW_NO = '"
+					+ invoice.getSowNo() + "'";
 			SQLQuery query = session.createSQLQuery(sql);
-			results = query.list();
+			results = query.list();*/
+			
+			/*results = (List<Invoice>) session.createSQLQuery(
+					"SELECT * FROM INVOICE WHERE SOW_NO = '"+ invoice.getSowNo() + "'")
+				    .addEntity(Invoice.class).list();*/
+			
+			// results = (List<Invoice>) session.createQuery(" from INVOICE WHERE SOW_NO = '" + invoice.getSowNo() + "'").list();
+			
+			/*Query queryResult = session.createQuery("from INVOICE");
+			
+			List<Invoice> resultsDB = queryResult.list();
+			for (int i = 0; i < resultsDB.size(); i++) {
+				Invoice invoiceInt = (Invoice) resultsDB.get(i);
+				results.add(invoiceInt);
+			}*/
+			  
 			trans.commit();
 		} catch (Exception e) {
 			trans.rollback();

@@ -49,13 +49,13 @@ public class Invoice implements Serializable {
 	private Date paidDate;
 	
 	@Column(name = "PAYMENT_ID")
-	private Integer paymentId;
+	private String paymentId;
 	
 	@Column(name = "INVOICE_STATUS")
-	private Integer invoiceStatus;
+	private String invoiceStatus;
 	
 	@Column(name = "REMARKS")
-	private Integer remarks;
+	private String remarks;
 
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
@@ -157,27 +157,27 @@ public class Invoice implements Serializable {
 		this.paidDate = paidDate;
 	}
 
-	public Integer getPaymentId() {
+	public String getPaymentId() {
 		return paymentId;
 	}
 
-	public void setPaymentId(Integer paymentId) {
+	public void setPaymentId(String paymentId) {
 		this.paymentId = paymentId;
 	}
 
-	public Integer getInvoiceStatus() {
+	public String getInvoiceStatus() {
 		return invoiceStatus;
 	}
 
-	public void setInvoiceStatus(Integer invoiceStatus) {
+	public void setInvoiceStatus(String invoiceStatus) {
 		this.invoiceStatus = invoiceStatus;
 	}
 
-	public Integer getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(Integer remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 

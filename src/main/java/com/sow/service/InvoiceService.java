@@ -7,5 +7,5 @@ import com.sow.model.Invoice;
 
 public interface InvoiceService {
 
-	List<Invoice> viewInvoice(String sowNo)throws SOWException;
+	List<Invoice> viewInvoice(Invoice invoice)throws SOWException;
 }

@@ -7,6 +7,6 @@ import com.sow.model.Invoice;
 
 public interface InvoiceDAO {
 	
-	List<Invoice> viewInvoice(String sowNo)throws SOWException;
+	List<Invoice> viewInvoice(Invoice invoice)throws SOWException;
 
 }

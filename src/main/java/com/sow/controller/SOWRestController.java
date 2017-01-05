@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mysql.jdbc.StringUtils;
 import com.sow.exception.SOWException;
 import com.sow.model.Invoice;
 import com.sow.model.JSON.SOWInfo;
@@ -86,15 +86,16 @@ public class SOWRestController {
 		return new ResponseEntity<BigDecimal>(totalvalue, HttpStatus.OK);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@CrossOrigin(origins = "*", maxAge = 3600)
-	@RequestMapping(value = "/viewInvoice/{sowNo}", method = RequestMethod.GET, headers = "Accept=application/json")	
-	public ResponseEntity<List> viewInvoice(@PathVariable("sowNo") String sowNo)
+	@RequestMapping(value = "/viewInvoice", method = RequestMethod.POST, headers = "Accept=application/json")	
+	public ResponseEntity<List<Invoice>> viewInvoice(@RequestBody Invoice invoice)
 			throws SOWException {
 		System.out
 				.println("View Invocie Controller - View Invoice method starts");
+		List<Invoice> invoices = new ArrayList<Invoice>();
 		
-		List<Invoice> invoices = invoiceService.viewInvoice(sowNo);
+		if(invoice != null && !StringUtils.isNullOrEmpty(invoice.getSowNo()))
+			invoices = invoiceService.viewInvoice(invoice);
 		
 		System.out
 				.println("View Invocie Controller - View Invoice method ends");

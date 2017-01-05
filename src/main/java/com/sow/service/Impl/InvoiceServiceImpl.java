@@ -16,10 +16,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Autowired
 	private InvoiceDAOImpl invoiceDAOImpl;;
 	
-	public List<Invoice> viewInvoice(String sowNo) throws SOWException {
+	public List<Invoice> viewInvoice(Invoice invoice) throws SOWException {
 		System.out.println("SowServiceImpl - addSOW method starts");
 		System.out.println("SowServiceImpl - addSOW method ends");
-		return invoiceDAOImpl.viewInvoice(sowNo);
+		return invoiceDAOImpl.viewInvoice(invoice);
 	}
 
 }
