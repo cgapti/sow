@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sow.bo.SOWBO;
 import com.sow.dao.Impl.SOWDAOImpl;
 import com.sow.exception.SOWException;
 import com.sow.model.SOW;
@@ -17,12 +18,17 @@ public class SOWServiceImpl implements SOWService {
 
 	
 	@Autowired
-	private SOWDAOImpl sowDAOImpl;;
+	private SOWDAOImpl sowDAOImpl;
+	
+	@Autowired
+	private SOWBO sowBO;
 	
 	public String addSOW(SOWInfo addSOW) throws SOWException {
 		System.out.println("SowServiceImpl - addSOW method starts");
 		System.out.println("SowServiceImpl - addSOW method ends");
-		return sowDAOImpl.saveAddSOW(processSOWInfo(addSOW));
+		
+		return sowBO.saveAddSOW(addSOW);
+		
 		
 	}
 	

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysql.jdbc.StringUtils;
 import com.sow.exception.SOWException;
 import com.sow.model.Invoice;
 import com.sow.model.JSON.SOWInfo;
@@ -33,20 +33,77 @@ public class SOWRestController {
 	
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/addSOW", method = RequestMethod.POST, headers = "Accept=application/json")	
-	public ResponseEntity<String> addSOW(@RequestBody SOWInfo addSOW)
+	public ResponseEntity<String> addSOW(@RequestBody SOWInfo sowInfo)
 			throws SOWException {
-		System.out
-				.println("Add SOWController - Add SOW method starts");
-		String flag = "failed";
-		if (null != addSOW) {
-			flag = sowServiceImpl.addSOW(addSOW);
+		System.out.println("Add SOWController - Add SOW method starts");
+		String response = "";
+		HttpStatus responseStatus = HttpStatus.EXPECTATION_FAILED;
+		
+		if (sowInfo != null) {
+			/*response = validateSowInfoObject(sowInfo);
+			System.out.println("Add SOWController - Add SOW method starts"+response);
+			if(response == null) {
+				response = sowServiceImpl.addSOW(sowInfo);
+				responseStatus = HttpStatus.OK;
+			}*/
+			response = sowServiceImpl.addSOW(sowInfo);
+			responseStatus = HttpStatus.OK;
 		}
 		System.out
 				.println("Add SOWController - Add SOW method ends");
-		return new ResponseEntity<String>(flag, HttpStatus.OK);
+		return new ResponseEntity<String>(response, responseStatus);
 	}
 	
 	
+	private String validateSowInfoObject(SOWInfo sowInfo) {
+		System.out.println("Inside SOWController - Add validateSowInfoObject starts");
+		
+		StringBuffer errorMessage = new StringBuffer();
+		
+		if(sowInfo != null) {		
+			String owner = sowInfo.getOwner();
+			String contactNo = sowInfo.getContractNo();
+			Integer resCount = sowInfo.getResCount();
+			Integer valueMillons = sowInfo.getValueMillion();
+			String engmntModel = sowInfo.getEngmntModel();
+			String projectDtls = sowInfo.getProjectDtls();
+			
+			
+			checkError(errorMessage, owner, "Owner filed should not be empty");
+			checkError(errorMessage, contactNo, "Contact No filed should not be empty");
+			checkError(errorMessage, resCount, "resCount filed should not be empty");
+			checkError(errorMessage, valueMillons, "valueMillons filed should not be empty");
+			checkError(errorMessage, engmntModel, "Engmnt Model filed should not be empty");
+			checkError(errorMessage, projectDtls, "projectDtls filed should not be empty");
+		}
+		return errorMessage.toString();
+	}
+
+
+	private String checkError(StringBuffer errorMessageSB, String field, String errorMsg) {
+		System.out.println("Inside SOWController - Add String checkError starts");
+		
+		if(!StringUtils.isEmpty(field) && !StringUtils.isEmpty(errorMsg)) {
+			if(!StringUtils.isEmpty(errorMessageSB))
+				errorMessageSB.append("\n");
+			
+			errorMessageSB.append(errorMsg);
+		}
+		return errorMessageSB.toString();
+	}
+	
+	private String checkError(StringBuffer errorMessageSB, Integer field, String errorMsg) {
+		System.out.println("Inside SOWController - Add checkError number check starts");
+		if(field==0 && field<=0) {
+			if(!StringUtils.isEmpty(errorMessageSB))
+				errorMessageSB.append("\n");
+			
+			errorMessageSB.append(errorMsg);
+		}
+		return errorMessageSB.toString();
+	}
+
+
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/fetchAllSOW", method = RequestMethod.GET, headers = "Accept=application/json")	
 	public ResponseEntity<List<SOWInfo>> fetchAllSOW()
@@ -94,7 +151,7 @@ public class SOWRestController {
 				.println("View Invocie Controller - View Invoice method starts");
 		List<Invoice> invoices = new ArrayList<Invoice>();
 		
-		if(invoice != null && !StringUtils.isNullOrEmpty(invoice.getSowNo()))
+		if(invoice != null && !StringUtils.isEmpty(invoice.getSowNo()))
 			invoices = invoiceService.viewInvoice(invoice);
 		
 		System.out

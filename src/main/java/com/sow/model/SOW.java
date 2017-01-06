@@ -96,6 +96,9 @@ public class SOW implements Serializable {
 
 	@Column(name = "UPDATED_BY")
 	private String updatedBy;
+	
+	@Column(name = "SOW_NO_SEED")
+	private String sowNoSeed;
 
 	public String getSowNo() {
 		return sowNo;
@@ -315,6 +318,14 @@ public class SOW implements Serializable {
 
 	public void setDeliveryModel(String deliveryModel) {
 		this.deliveryModel = deliveryModel;
+	}
+
+	public String getSowNoSeed() {
+		return sowNoSeed;
+	}
+
+	public void setSowNoSeed(String sowNoSeed) {
+		this.sowNoSeed = sowNoSeed;
 	}
 
 }
