@@ -19,10 +19,12 @@ public class SOWInfo implements Serializable {
 	private String projectDtls;
 	private Integer resCount;
 	private Integer valueMillion;
+	private Integer sowValueUSD;
 	private Integer sowValueSgd;
 	private Integer SowValueMyr;
 	private Integer sowValueInr;
 	private String contractCurrency;
+	private Integer currencyRate;
 	private Date sowStartDate;
 	private Date sowEndDate;
 	private String sowStatus;
@@ -37,6 +39,8 @@ public class SOWInfo implements Serializable {
 	private String createdBy;
 	private Date updatedDate;
 	private String updatedBy;
+	private Integer sowNoSeed;
+	
 	
 	
 	public Integer getpId() {
@@ -210,6 +214,24 @@ public class SOWInfo implements Serializable {
 	 */
 	public void setSowNo(String sowNo) {
 		this.sowNo = sowNo;
+	}
+	public Integer getSowValueUSD() {
+		return sowValueUSD;
+	}
+	public void setSowValueUSD(Integer sowValueUSD) {
+		this.sowValueUSD = sowValueUSD;
+	}
+	public Integer getCurrencyRate() {
+		return currencyRate;
+	}
+	public void setCurrencyRate(Integer currencyRate) {
+		this.currencyRate = currencyRate;
+	}
+	public Integer getSowNoSeed() {
+		return sowNoSeed;
+	}
+	public void setSowNoSeed(Integer sowNoSeed) {
+		this.sowNoSeed = sowNoSeed;
 	}
 		
 	

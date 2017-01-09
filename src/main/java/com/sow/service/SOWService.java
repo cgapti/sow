@@ -15,4 +15,8 @@ public interface SOWService {
 	List<SOWInfo> showSOW(String SOWno)throws SOWException;
 	
 	BigDecimal currRateCal(String curtype, BigDecimal curvalue)throws SOWException;
+	
+	SOWInfo featchSowRefNo()throws SOWException;
+
+	//Integer getSowNoSeed();
 }

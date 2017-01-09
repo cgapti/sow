@@ -42,6 +42,9 @@ public class SOW implements Serializable {
 
 	@Column(name = "VALUE_MILLION")
 	private Integer valueMillion;
+	
+	@Column(name = "SOW_VALUE_USD")
+	private Integer sowValueUSD;
 
 	@Column(name = "SOW_VALUE_SGD")
 	private Integer sowValueSgd;
@@ -54,6 +57,9 @@ public class SOW implements Serializable {
 
 	@Column(name = "CONTRACT_CURRENCY")
 	private String contractCurrency;
+	
+	@Column(name = "CURRENCY_RATE")
+	private Integer currencyRate;
 
 	@Column(name = "SOW_START_DATE")
 	private Date sowStartDate;
@@ -98,7 +104,7 @@ public class SOW implements Serializable {
 	private String updatedBy;
 	
 	@Column(name = "SOW_NO_SEED")
-	private String sowNoSeed;
+	private Integer sowNoSeed;
 
 	public String getSowNo() {
 		return sowNo;
@@ -320,12 +326,28 @@ public class SOW implements Serializable {
 		this.deliveryModel = deliveryModel;
 	}
 
-	public String getSowNoSeed() {
+	public Integer getSowNoSeed() {
 		return sowNoSeed;
 	}
 
-	public void setSowNoSeed(String sowNoSeed) {
+	public void setSowNoSeed(Integer sowNoSeed) {
 		this.sowNoSeed = sowNoSeed;
+	}
+
+	public Integer getSowValueUSD() {
+		return sowValueUSD;
+	}
+
+	public void setSowValueUSD(Integer sowValueUSD) {
+		this.sowValueUSD = sowValueUSD;
+	}
+
+	public Integer getCurrencyRate() {
+		return currencyRate;
+	}
+
+	public void setCurrencyRate(Integer currencyRate) {
+		this.currencyRate = currencyRate;
 	}
 
 }

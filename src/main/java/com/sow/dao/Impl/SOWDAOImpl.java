@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.springframework.stereotype.Repository;
 
 import com.sow.dao.AbstractDao;
@@ -17,18 +19,31 @@ import com.sow.model.JSON.SOWInfo;
 @Repository("/sowDAOImpl")
 public class SOWDAOImpl extends AbstractDao<Integer, SOW> implements
 		SOWDAO {
-	
-	public SOW featchSowNoSeed()throws SOWException{
+	SOW sow;
+	public Integer featchSowNoSeed()throws SOWException{
 		/*DetachedCriteria criteria = DetachedCriteria.forClass(SOW.class).setProjection(Projections.max("SOW_NO_SEED"));
 		SOW sow =(SOW) criteria.getExecutableCriteria(getSession()).list().get(0);*/
 		Session session = getSession();
 		Transaction trans = session.beginTransaction();
 		
-		SOW sow = (SOW) session.createSQLQuery(
-				"SELECT max(SOW_NO_SEED) FROM SOW_MS")
-			    .addEntity(SOW.class).list();
+		/*SQLQuery query = session.createSQLQuery(
+				"SELECT max(PID) FROM SOW_MS")
+			    .addEntity(SOW.class);
+		SOW sow=(SOW)query.addEntity(SOW.class);
+		System.out.println("Inside SOWDAOImpl:"+sow.getpId());*/
 		
-		return sow;
+		/*Criteria cr = session.createCriteria(SOW.class);
+		cr.setProjection(Projections.projectionList()
+		            .add(Projections.max("number")));*/
+		
+		Criteria criteria = session
+			    .createCriteria(SOW.class)
+			    .setProjection(Projections.max("sowNoSeed"));
+			Integer sowNoSeed = (Integer)criteria.uniqueResult();		
+			
+			System.out.println("Inside SOWDAOImpl sowNoSeed:"+sowNoSeed);
+			trans.commit();
+		return sowNoSeed+1;
 	}
 	
 	public String saveAddSOW(SOW addSOW)throws SOWException{
@@ -65,6 +80,19 @@ public class SOWDAOImpl extends AbstractDao<Integer, SOW> implements
 		resultvalue = calculatedResult(curtype, curvalue);
 		System.out.println("SOWDAOImpl - currCalculation method starts");
 		return resultvalue;
+	}
+	
+	public Integer featchSowRefNo()throws SOWException{
+		Session session = getSession();
+		Integer sowNoSeed;
+		System.out.println("SOWDAOImpl - featchSowRefNo method starts");
+		Criteria criteria = session
+			    .createCriteria(SOW.class)
+			    .setProjection(Projections.max("sowNoSeed"));
+			sowNoSeed = (Integer)criteria.uniqueResult();
+			
+		System.out.println("SOWDAOImpl - featchSowRefNo method starts");
+		return sowNoSeed + 1;
 	}
 
 	

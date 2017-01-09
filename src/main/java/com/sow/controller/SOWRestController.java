@@ -40,14 +40,14 @@ public class SOWRestController {
 		HttpStatus responseStatus = HttpStatus.EXPECTATION_FAILED;
 		
 		if (sowInfo != null) {
-			/*response = validateSowInfoObject(sowInfo);
+			response = validateSowInfoObject(sowInfo);
 			System.out.println("Add SOWController - Add SOW method starts"+response);
-			if(response == null) {
+			if(response.equals("") && response.isEmpty()) {
 				response = sowServiceImpl.addSOW(sowInfo);
 				responseStatus = HttpStatus.OK;
-			}*/
-			response = sowServiceImpl.addSOW(sowInfo);
-			responseStatus = HttpStatus.OK;
+			}
+			/*response = sowServiceImpl.addSOW(sowInfo);
+			responseStatus = HttpStatus.OK;*/
 		}
 		System.out
 				.println("Add SOWController - Add SOW method ends");
@@ -58,52 +58,55 @@ public class SOWRestController {
 	private String validateSowInfoObject(SOWInfo sowInfo) {
 		System.out.println("Inside SOWController - Add validateSowInfoObject starts");
 		
-		StringBuffer errorMessage = new StringBuffer();
+		String errorMessage = "";
+		String resCountStr= "";
+		String valueMillonsStr= "";
 		
-		if(sowInfo != null) {		
+		if(sowInfo != null) {	
+			String sowNo = sowInfo.getSowNo();
 			String owner = sowInfo.getOwner();
-			String contactNo = sowInfo.getContractNo();
-			Integer resCount = sowInfo.getResCount();
-			Integer valueMillons = sowInfo.getValueMillion();
 			String engmntModel = sowInfo.getEngmntModel();
 			String projectDtls = sowInfo.getProjectDtls();
+			String contractCurrency = sowInfo.getContractCurrency();
+		//	String contactNo = sowInfo.getContractNo();
+			Integer resCount = sowInfo.getResCount();
+			String status=sowInfo.getSowStatus();
+			String location=sowInfo.getLocation();
+			String businessArea = sowInfo.getBusinessArea();
 			
 			
-			checkError(errorMessage, owner, "Owner filed should not be empty");
-			checkError(errorMessage, contactNo, "Contact No filed should not be empty");
-			checkError(errorMessage, resCount, "resCount filed should not be empty");
-			checkError(errorMessage, valueMillons, "valueMillons filed should not be empty");
-			checkError(errorMessage, engmntModel, "Engmnt Model filed should not be empty");
-			checkError(errorMessage, projectDtls, "projectDtls filed should not be empty");
+			
+			
+			if(engmntModel.equalsIgnoreCase("T and M")&& resCount!=null){
+				errorMessage=checkError(errorMessage, resCountStr, "resCount filed should not be empty");
+			}
+			
+			errorMessage=checkError(errorMessage, sowNo, "sowNo filed should not be empty");
+			errorMessage=checkError(errorMessage, owner, "Owner filed should not be empty");
+		//	errorMessage=checkError(errorMessage, contactNo, "Contract No filed should not be empty");
+			errorMessage=checkError(errorMessage, contractCurrency, "contractCurrency filed should not be empty");
+			errorMessage=checkError(errorMessage, engmntModel, "Engmnt Model filed should not be empty");
+			errorMessage=checkError(errorMessage, projectDtls, "projectDtls filed should not be empty");
+			errorMessage=checkError(errorMessage, status, "status filed should not be empty");
+			errorMessage=checkError(errorMessage, location, "location filed should not be empty");
+			errorMessage=checkError(errorMessage, businessArea, "businessArea filed should not be empty");
 		}
 		return errorMessage.toString();
 	}
 
 
-	private String checkError(StringBuffer errorMessageSB, String field, String errorMsg) {
+	private String checkError(String errorMessageSB, String field, String errorMsg) {
 		System.out.println("Inside SOWController - Add String checkError starts");
 		
-		if(!StringUtils.isEmpty(field) && !StringUtils.isEmpty(errorMsg)) {
+		if(StringUtils.isEmpty(field) && !StringUtils.isEmpty(errorMsg)) {
 			if(!StringUtils.isEmpty(errorMessageSB))
-				errorMessageSB.append("\n");
+				errorMessageSB = errorMessageSB.concat("\n");
 			
-			errorMessageSB.append(errorMsg);
+			errorMessageSB = errorMessageSB.concat(errorMsg);
 		}
 		return errorMessageSB.toString();
 	}
 	
-	private String checkError(StringBuffer errorMessageSB, Integer field, String errorMsg) {
-		System.out.println("Inside SOWController - Add checkError number check starts");
-		if(field==0 && field<=0) {
-			if(!StringUtils.isEmpty(errorMessageSB))
-				errorMessageSB.append("\n");
-			
-			errorMessageSB.append(errorMsg);
-		}
-		return errorMessageSB.toString();
-	}
-
-
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/fetchAllSOW", method = RequestMethod.GET, headers = "Accept=application/json")	
 	public ResponseEntity<List<SOWInfo>> fetchAllSOW()
@@ -141,6 +144,20 @@ public class SOWRestController {
 		System.out
 				.println("Currency Calculation SOWController - currCal method ends");
 		return new ResponseEntity<BigDecimal>(totalvalue, HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	@RequestMapping(value = "/fetchSOWRefNo", method = RequestMethod.GET, headers = "Accept=application/json")	
+	public ResponseEntity<SOWInfo> fetchSOWRefNo()
+			throws SOWException {
+		System.out
+				.println("fetchSOWRefNo SOWController - fetchSOWRefNo method starts");
+		SOWInfo sowInfo = new SOWInfo();
+		sowInfo = sowServiceImpl.featchSowRefNo();
+		
+		System.out
+				.println("featchSowRefNo SOWController - fetchSOWRefNo method ends");
+		return new ResponseEntity<SOWInfo>(sowInfo, HttpStatus.OK);
 	}
 	
 	@CrossOrigin(origins = "*", maxAge = 3600)

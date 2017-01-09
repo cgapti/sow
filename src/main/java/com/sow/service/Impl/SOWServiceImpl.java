@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.sow.bo.SOWBO;
 import com.sow.dao.Impl.SOWDAOImpl;
@@ -23,12 +24,19 @@ public class SOWServiceImpl implements SOWService {
 	@Autowired
 	private SOWBO sowBO;
 	
-	public String addSOW(SOWInfo addSOW) throws SOWException {
+	/*public String addSOW(SOWInfo addSOW) throws SOWException {
 		System.out.println("SowServiceImpl - addSOW method starts");
 		System.out.println("SowServiceImpl - addSOW method ends");
 		
 		return sowBO.saveAddSOW(addSOW);
 		
+		
+	}*/
+	
+	public String addSOW(SOWInfo addSOW) throws SOWException {
+		System.out.println("SowServiceImpl - addSOW method starts");
+		System.out.println("SowServiceImpl - addSOW method ends");
+		return sowDAOImpl.saveAddSOW(processSOWInfo(addSOW));
 		
 	}
 	
@@ -46,10 +54,12 @@ public class SOWServiceImpl implements SOWService {
 			addSOW.setProjectDtls(addSOWInfo.getProjectDtls());
 			addSOW.setResCount(addSOWInfo.getResCount());
 			addSOW.setValueMillion(addSOWInfo.getValueMillion());
+			addSOW.setSowValueUSD(addSOWInfo.getSowValueUSD());
 			addSOW.setSowValueInr(addSOWInfo.getSowValueInr());
 			addSOW.setSowValueMyr(addSOWInfo.getSowValueMyr());
 			addSOW.setSowValueSgd(addSOWInfo.getSowValueSgd());
 			addSOW.setContractCurrency(addSOWInfo.getContractCurrency());
+			addSOW.setCurrencyRate(addSOWInfo.getCurrencyRate());
 			addSOW.setSowStartDate(addSOWInfo.getSowEndDate());
 			addSOW.setSowEndDate(addSOWInfo.getSowEndDate());
 			addSOW.setSowStatus(addSOWInfo.getSowStatus());
@@ -64,6 +74,7 @@ public class SOWServiceImpl implements SOWService {
 			addSOW.setCreatedBy(addSOWInfo.getCreatedBy());
 			addSOW.setUpdatedDate(addSOWInfo.getUpdatedDate());
 			addSOW.setUpdatedBy(addSOWInfo.getUpdatedBy());
+			addSOW.setSowNoSeed(addSOWInfo.getSowNoSeed());
 		}
 		System.out.println("UserServiceImpl - processUserInfo method starts");
 		return addSOW;
@@ -86,4 +97,31 @@ public class SOWServiceImpl implements SOWService {
 		return sowDAOImpl.currCalculation(curtype, curvalue);
 		
 	}
+	
+	public SOWInfo featchSowRefNo() throws SOWException {
+		System.out.println("SowServiceImpl - featchSowRefNo method starts");
+		String sowRefNoFmt = null;
+		SOWInfo sowInfo = new SOWInfo();
+		//SOW 020/SCB/TM
+		Integer sowRefNo = sowDAOImpl.featchSowNoSeed();
+		if( sowRefNo != null) {
+			String sowRefNoStr = sowRefNo.toString();
+			if(sowRefNoStr.length() == 1) {
+				sowRefNoFmt = "00".concat(sowRefNoStr);
+			} else if(sowRefNoStr.length() == 2) {
+				sowRefNoFmt = "0".concat(sowRefNoStr);
+			} else {
+				sowRefNoFmt = sowRefNoStr;
+			}
+		}
+		
+		sowRefNoFmt = "SOW ".concat(sowRefNoFmt).concat("/SCB/TM");
+		sowInfo.setSowNo(sowRefNoFmt);
+		sowInfo.setSowNoSeed(sowRefNo);
+		
+		System.out.println("*****************sowRefNoFmt***********" + sowRefNoFmt);
+		return sowInfo;
+		
+	}
+	
 }
