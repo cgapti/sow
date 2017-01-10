@@ -77,8 +77,8 @@ public class SOWRestController {
 			
 			
 			
-			if(engmntModel.equalsIgnoreCase("T and M")&& resCount!=null){
-				errorMessage=checkError(errorMessage, resCountStr, "resCount filed should not be empty");
+			if(engmntModel.equalsIgnoreCase("T and M") && resCount==null){
+					errorMessage=checkError(errorMessage, resCountStr, "resCount filed should not be empty");
 			}
 			
 			errorMessage=checkError(errorMessage, sowNo, "sowNo filed should not be empty");
