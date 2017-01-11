@@ -3,12 +3,16 @@ package com.sow.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -100,7 +104,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		try {
 			session = getSession();
 			trans = session.beginTransaction();
-			sowlist = session.createCriteria(SOW.class).list();
+			sowlist = session.createCriteria(SOW.class).addOrder(Order.asc("sowNo")).list();
 			trans.commit();
 		} catch (Exception e) {
 			trans.rollback();
@@ -114,10 +118,12 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		Session session = null;
 		Transaction trans = null;
 		List<SOWInfo> sowlist = null;
+		Criteria cr = null;
 		try {
 			session = getSession();
 			trans = session.beginTransaction();
-			sowlist = session.createCriteria(SOW.class).add( Restrictions.eq("sowNo", SOWno ) ).list();
+			cr = session.createCriteria(SOW.class).add( Restrictions.eq("sowNo", SOWno ) );
+			sowlist = cr.list();
 			trans.commit();
 		} catch (Exception e) {
 			trans.rollback();
