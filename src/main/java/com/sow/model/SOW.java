@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 
 @Table(name = "SOW_MS")
@@ -62,9 +64,11 @@ public class SOW implements Serializable {
 	private Integer currencyRate;
 
 	@Column(name = "SOW_START_DATE")
+	@Type(type="date")
 	private Date sowStartDate;
 
 	@Column(name = "SOW_END_DATE")
+	@Type(type="date")
 	private Date sowEndDate;
 
 	@Column(name = "SOW_STATUS")
@@ -92,12 +96,14 @@ public class SOW implements Serializable {
 	private String deliveryModel;
 
 	@Column(name = "CREATED_DATE")
+	@Type(type="date")
 	private Date createdDate;
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
 
 	@Column(name = "UPDATED_DATE")
+	@Type(type="date")
 	private Date updatedDate;
 
 	@Column(name = "UPDATED_BY")
