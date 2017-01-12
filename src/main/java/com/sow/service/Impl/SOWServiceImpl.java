@@ -60,7 +60,7 @@ public class SOWServiceImpl implements SOWService {
 			addSOW.setSowValueSgd(addSOWInfo.getSowValueSgd());
 			addSOW.setContractCurrency(addSOWInfo.getContractCurrency());
 			addSOW.setCurrencyRate(addSOWInfo.getCurrencyRate());
-			addSOW.setSowStartDate(addSOWInfo.getSowEndDate());
+			addSOW.setSowStartDate(addSOWInfo.getSowStartDate());
 			addSOW.setSowEndDate(addSOWInfo.getSowEndDate());
 			addSOW.setSowStatus(addSOWInfo.getSowStatus());
 			addSOW.setLocation(addSOWInfo.getLocation());
