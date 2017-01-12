@@ -40,7 +40,10 @@ public class SOWDAOImpl extends AbstractDao<Integer, SOW> implements
 			    .createCriteria(SOW.class)
 			    .setProjection(Projections.max("sowNoSeed"));
 			Integer sowNoSeed = (Integer)criteria.uniqueResult();		
-			
+			if(sowNoSeed==null)
+			{
+				sowNoSeed=0;
+			}
 			System.out.println("Inside SOWDAOImpl sowNoSeed:"+sowNoSeed);
 			trans.commit();
 		return sowNoSeed+1;
