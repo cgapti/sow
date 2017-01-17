@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "SOW_WORK_ORDER")
+@Table(name = "WORK_ORDER")
 public class OrderBook implements Serializable {
 
 	private static final long serialVersionUID = 8704535406621494434L;
@@ -18,112 +18,25 @@ public class OrderBook implements Serializable {
 	@Column(name = "SOW_NO")
 	private String sowNo;
 
-	@Column(name = "PRJ_DESC")
-	private Integer pId;
+	@Column(name = "FIN_YEAR")
+	private String finYr;
 
-	@Column(name = "CONTRACT_TYPE")
-	private String contractNo;
+	@Column(name = "MONTH")
+	private String month;
 	
-	@Column(name = "SOW_VALUE_USD")
-	private Integer sowValueUSD;
+	@Column(name = "TECHM_PRJ_DESCR")
+	private String techMPrjDesc;
 	    
-	@Column(name = "PRJECTN_Q1_1") 
-	private Integer prjectnQ11;
+	@Column(name = "CONTRACT_TYPE") 
+	private String contractType;
 	
-	@Column(name = "PRJECTN_Q1_2") 
-	private Integer prjectnQ12;
+	@Column(name = "PRJ_TOTAL") 
+	private Integer prjTotal;
 	
-	@Column(name = "PRJECTN_Q1_3")  
-	private Integer prjectnQ13;
-
-	@Column(name = "PRJECTN_Q1_SUM") 
-	private Integer prjectnQ1Sum;
-
-	@Column(name = "ACTUAL_Q1_1")
-	private Integer actualQ11;
-
-	@Column(name = "ACTUAL_Q1_2") 
-	private Integer actualQ12;
-
-    @Column(name = "ACTUAL_Q1_3") 
-	private Integer actualQ13;
-
-	@Column(name = "ACTUAL_Q1_SUM")  
-	private Integer actualQ1Sum;
-
-	@Column(name = "PRJECTN_Q2_1") 
-	private Integer prjectnQ21;
+	@Column(name = "ACT_TOTAL") 
+	private Integer ActTotal;
 	
-	@Column(name = "PRJECTN_Q2_2")   
-	private Integer prjectnQ22;
-	
-	@Column(name = "PRJECTN_Q2_3")  
-	private Integer prjectnQ23;
-	
-	@Column(name = "PRJECTN_Q2_SUM")
-	private Integer prjectnQ2Sum;
-
-	@Column(name = "ACTUAL_Q2_1")
-	private Integer actualQ21;
-
-	@Column(name = "ACTUAL_Q2_2")
-	private Integer actualQ22;
-
-	@Column(name = "ACTUAL_Q2_3")
-	private Integer actualQ23;
-
-	@Column(name = "ACTUAL_Q2_SUM")
-	private Integer actualQ2Sum;
-
-	@Column(name = "PRJECTN_Q3_1")
-	private Integer prjectnQ31;
-
-	@Column(name = "PRJECTN_Q3_2")
-	private Integer prjectnQ32;
-	
-	@Column(name = "PRJECTN_Q3_3")
-	private Integer prjectnQ33;
-	
-	@Column(name = "PRJECTN_Q3_SUM")  
-	private Integer prjectnQ3Sum;
-
-	@Column(name = "ACTUAL_Q3_1")	
-	private Integer actualQ31;
-
-	@Column(name = "ACTUAL_Q3_2")
-	private Integer actualQ32;
-	
-	@Column(name = "ACTUAL_Q3_3") 
-	private Integer actualQ33;
-
-	@Column(name = "ACTUAL_Q3_SUM") 
-	private Integer actualQ3Sum;
-
-	@Column(name = "PRJECTN_Q4_1")
-	private Integer prjectnQ41;
-
-	@Column(name = "PRJECTN_Q4_2")
-	private Integer prjectnQ42;
-
-	@Column(name = "PRJECTN_Q4_3")   
-	private Integer prjectnQ43;
-
-	@Column(name = "PRJECTN_Q4_SUM") 
-	private Integer prjectnQ4Sum;
-
-	@Column(name = "ACTUAL_Q4_1") 
-	private Integer actualQ41;
-
-	@Column(name = "ACTUAL_Q4_2") 
-	private Integer actualQ42;
-
-	@Column(name = "ACTUAL_Q4_3") 
-	private Integer actualQ43;
-
-	@Column(name = "ACTUAL_Q4_SUM")  
-	private Integer actualQ4Sum;
-
-	@Column(name = "REMARKS") 
+	@Column(name = "OB_REMARKS") 
 	private String remarks;
 	
 	@Column(name = "CREATED_DATE")
@@ -136,7 +49,104 @@ public class OrderBook implements Serializable {
 	private Date updatedDate;
 
 	@Column(name = "UPDATED_BY")
-	private String updatedBy;    
+	private String updatedBy;
+
+	public String getSowNo() {
+		return sowNo;
+	}
+
+	public void setSowNo(String sowNo) {
+		this.sowNo = sowNo;
+	}
+
+	
+	public String getFinYr() {
+		return finYr;
+	}
+
+	public void setFinYr(String finYr) {
+		this.finYr = finYr;
+	}
+
+	public Integer getActTotal() {
+		return ActTotal;
+	}
+
+	public void setActTotal(Integer actTotal) {
+		ActTotal = actTotal;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getTechMPrjDesc() {
+		return techMPrjDesc;
+	}
+
+	public void setTechMPrjDesc(String techMPrjDesc) {
+		this.techMPrjDesc = techMPrjDesc;
+	}
+
+	public String getContractType() {
+		return contractType;
+	}
+
+	public void setContractType(String contractType) {
+		this.contractType = contractType;
+	}
+
+	public Integer getPrjTotal() {
+		return prjTotal;
+	}
+
+	public void setPrjTotal(Integer prjTotal) {
+		this.prjTotal = prjTotal;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}    
 
 
 

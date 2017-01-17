@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mysql.jdbc.StringUtils;
 import com.sow.exception.SOWException;
 import com.sow.model.Invoice;
+import com.sow.model.JSON.OrderBookInfo;
 import com.sow.model.JSON.SOWInfo;
+import com.sow.model.JSON.SowDetailsInfo;
 import com.sow.service.InvoiceService;
+import com.sow.service.OrderBookService;
 import com.sow.service.SOWService;
 
 @RestController
@@ -30,6 +34,9 @@ public class SOWRestController {
 	
 	@Autowired     
 	private InvoiceService invoiceService;
+	
+	@Autowired
+	private OrderBookService orderBookServiceImpl;
 	
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/addSOW", method = RequestMethod.POST, headers = "Accept=application/json")	
@@ -176,5 +183,30 @@ public class SOWRestController {
 		
 		return ResponseEntity.ok(invoices);
 	}
-	
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	@RequestMapping(value = "/addOrderBook", method = RequestMethod.POST, headers = "Accept=application/json")	
+	public ResponseEntity<String> addOrderBook(@RequestBody OrderBookInfo addOrderBook)
+			throws SOWException {
+		System.out
+				.println("Add SOWController - Add SOW method starts");
+		String flag = "failed";
+		if (null != addOrderBook) {
+			flag = orderBookServiceImpl.addOrderBook(addOrderBook);
+		}
+		System.out
+				.println("Add SOWController - Add SOW method ends");
+		return new ResponseEntity<String>(flag, HttpStatus.OK);
+	}	
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	@RequestMapping(value = "/fetchOrderBook", method = RequestMethod.GET, headers = "Accept=application/json")
+	public ResponseEntity<List<SowDetailsInfo>> fetchAllOrderBook()
+			throws SOWException {
+		System.out
+				.println("Fetch Single SOWController - fetchOrderBook method starts");
+		List<SowDetailsInfo> obList = new ArrayList<SowDetailsInfo>();
+		obList = orderBookServiceImpl.fetchAllOrderBook();
+		System.out
+				.println("Fetch Single SOWController - fetchOrderBook method ends");
+		return new ResponseEntity<List<SowDetailsInfo>>(obList, HttpStatus.OK);
+	}
 }

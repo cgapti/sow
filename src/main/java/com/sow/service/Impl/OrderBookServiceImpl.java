@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import com.sow.dao.Impl.OrderBookDAOImpl;
 import com.sow.exception.SOWException;
 import com.sow.model.OrderBook;
-import com.sow.model.OrderBookPK;
 import com.sow.model.JSON.OrderBookInfo;
+import com.sow.model.JSON.SOWInfo;
+import com.sow.model.JSON.SowDetailsInfo;
 import com.sow.service.OrderBookService;
 
 @Service("orderBookServiceImpl")
@@ -21,33 +22,33 @@ public class OrderBookServiceImpl implements OrderBookService {
 	
 	
 	public String addOrderBook(OrderBookInfo addOrderBook) throws SOWException {
-		System.out.println("OrderBookServiceImpl - addSOW method starts");
-		System.out.println("OrderBookServiceImpl - addSOW method ends");
+		System.out.println("OrderBookServiceImpl - addOrderBook method starts");
+		System.out.println("OrderBookServiceImpl - addOrderBook method ends");
 		return orderBookDAOImpl.saveOrderBook(processOrderBookInfo(addOrderBook));
 		
 	}
-	
-	private OrderBook processOrderBookInfo(OrderBookInfo orderBookInfo) {
-		System.out.println("OrderBookServiceImpl - processSOWInfo method starts");
+	public List<SowDetailsInfo> fetchAllOrderBook()throws SOWException {
+		System.out.println("OrderBookServiceImpl - fetchAllOrderBook method starts");
+		return orderBookDAOImpl.fetchOrderBookData();
+		
+	}
+	private OrderBook processOrderBookInfo(OrderBookInfo addOrderBook) {
+		System.out.println("OrderBookServiceImpl - processOrderBookInfo method starts");
 		OrderBook addOB=new OrderBook();
-		OrderBookPK orderBookPK = new OrderBookPK();
 	
-		/*if (null != orderBookInfo) {
-			orderBookPK.setSowNo(orderBookInfo.getSowNo());
-			orderBookPK.setFinYear(orderBookInfo.getFinYear());
-			orderBookPK.setMonth(orderBookInfo.getMonth());
-			addOB.setOrderBookPK(orderBookPK);
-			addOB.setTechmPrjDescr(orderBookInfo.getTechmPrjDescr());
-			addOB.setContractType(orderBookInfo.getContractType());
-			addOB.setPrjTotal(orderBookInfo.getPrjTotal());
-			addOB.setActTotal(orderBookInfo.getActTotal());
-			addOB.setRemarks(orderBookInfo.getRemarks());			
-			addOB.setCreatedDate(orderBookInfo.getCreatedDate());
-			addOB.setCreatedBy(orderBookInfo.getCreatedBy());
-			addOB.setUpdatedDate(orderBookInfo.getUpdatedDate());
-			addOB.setUpdatedBy(orderBookInfo.getUpdatedBy());
-		}*/
-		System.out.println("UserServiceImpl - processUserInfo method starts");
+		if (null != addOrderBook) {
+			addOB.setSowNo(addOrderBook.getSowNo());
+			addOB.setFinYr(addOrderBook.getFinYr());
+			addOB.setMonth(addOrderBook.getMonth());
+			addOB.setPrjTotal(addOrderBook.getPrjTotal());
+			addOB.setTechMPrjDesc(addOrderBook.getTechMPrjDesc());
+			addOB.setRemarks(addOrderBook.getRemarks());			
+			addOB.setCreatedDate(addOrderBook.getCreatedDate());
+			addOB.setCreatedBy(addOrderBook.getCreatedBy());
+			addOB.setUpdatedDate(addOrderBook.getUpdatedDate());
+			addOB.setUpdatedBy(addOrderBook.getUpdatedBy());
+		}
+		System.out.println("OrderBookServiceImpl - processOrderBookInfo method starts");
 		return addOB;
 	}
 
