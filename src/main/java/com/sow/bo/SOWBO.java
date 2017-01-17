@@ -15,9 +15,9 @@ public class SOWBO  {
 	private SOWDAOImpl sowDAOImpl;
 	
 	public String saveAddSOW(SOWInfo addSOW)throws SOWException{
-		SOW sowNoSeed = sowDAOImpl.featchSowNoSeed();
+		//SOW sowNoSeed = sowDAOImpl.featchSowNoSeed();
 		
-		System.out.println("*8***************************" + sowNoSeed);
+		//System.out.println("*8***************************" + sowNoSeed);
 		return null;
 		//return sowDAOImpl.saveAddSOW(processSOWInfo(addSOW));
 	

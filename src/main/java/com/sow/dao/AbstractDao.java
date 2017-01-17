@@ -3,6 +3,7 @@ package com.sow.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -137,12 +138,15 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		Transaction trans = null;
 		BigDecimal resultvalue = null;
 		BigDecimal calculation = null;
+		DecimalFormat df = new DecimalFormat("#.#");
 		try {
 			session = getSession();
 			trans = session.beginTransaction();
 			Object sow = session.createCriteria(SOWCurrency.class).setProjection(Projections.distinct(Projections.projectionList().add(Projections.property("rate"),"rate"))).add(Restrictions.eq("currency", curtype)).uniqueResult();
 			calculation = new BigDecimal(sow.toString());
 			resultvalue = curvalue.multiply(calculation);
+			resultvalue.setScale(2, BigDecimal.ROUND_UP);
+			System.out.println("AbstractDao - calculatedResult::::::"+resultvalue);
 			trans.commit();
 		} catch (Exception e) {
 			trans.rollback();
