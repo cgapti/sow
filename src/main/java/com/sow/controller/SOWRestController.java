@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 //import com.mysql.jdbc.StringUtils;
 import com.sow.exception.SOWException;
 import com.sow.model.Invoice;
+import com.sow.model.JSON.InvoiceInfo;
 import com.sow.model.JSON.OrderBookInfo;
 import com.sow.model.JSON.SOWInfo;
 import com.sow.model.JSON.SowDetailsInfo;
@@ -169,11 +171,11 @@ public class SOWRestController {
 	
 	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/viewInvoice", method = RequestMethod.POST, headers = "Accept=application/json")	
-	public ResponseEntity<List<Invoice>> viewInvoice(@RequestBody Invoice invoice)
+	public ResponseEntity<InvoiceInfo> viewInvoice(@RequestBody Invoice invoice)
 			throws SOWException {
 		System.out
 				.println("View Invocie Controller - View Invoice method starts");
-		List<Invoice> invoices = new ArrayList<Invoice>();
+		InvoiceInfo invoices = new InvoiceInfo();
 		
 		if(invoice != null && !StringUtils.isEmpty(invoice.getSowNo()))
 			invoices = invoiceService.viewInvoice(invoice);
