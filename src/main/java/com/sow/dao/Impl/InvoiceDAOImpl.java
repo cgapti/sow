@@ -66,7 +66,7 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 				}
 				String projectDtls = "";
 				if (row[4] != null && row[4] != "") {
-					projectDtls = row[3].toString();
+					projectDtls = row[4].toString();
 					sowDetails.setProjectDtls(projectDtls);
 				}
 				String businessArea = "";
