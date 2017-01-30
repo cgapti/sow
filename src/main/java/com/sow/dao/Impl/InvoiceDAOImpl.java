@@ -26,7 +26,7 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 	public InvoiceInfo viewInvoice(Invoice invoice) throws SOWException {
 		System.out.println("InvoiceDAOImpl - viewInvoice method starts");
 
-		Session session = null;
+		Session session = null; 
 		Transaction trans = null;
 		InvoiceInfo invoiceInfo = null; 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
