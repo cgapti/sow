@@ -28,7 +28,7 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 
 		Session session = null;
 		Transaction trans = null;
-		InvoiceInfo invoiceInfo = null;
+		InvoiceInfo invoiceInfo = null; 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 
