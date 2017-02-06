@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sow.model.Invoice;
+import com.sow.exception.CustomException;
 
 
 public class InvoiceInfo implements Serializable {	
@@ -13,15 +13,18 @@ public class InvoiceInfo implements Serializable {
 	
 	private String sowNo;
 	
-	private SowDetailsInfo sowInfo = new SowDetailsInfo();
-	private List<SowDetailsInfo> sowDetailsInfoList = new ArrayList<SowDetailsInfo>();
-	 
-	public SowDetailsInfo getSowInfo() {
-		return sowInfo;
+	private InvoiceDetailsInfo sowInfo = new InvoiceDetailsInfo();
+	private List<InvoiceDetailsInfo> sowDetailsInfoList = new ArrayList<InvoiceDetailsInfo>();
+	private CustomException expception = new CustomException(); 
+	
+	
+	public CustomException getExpception() {
+		return expception;
 	}
-	public void setSowInfo(SowDetailsInfo sowInfo) {
-		this.sowInfo = sowInfo;
+	public void setExpception(CustomException expception) {
+		this.expception = expception;
 	}
+	
 	public String getSowNo() {
 		return sowNo;
 	}
@@ -29,13 +32,19 @@ public class InvoiceInfo implements Serializable {
 		this.sowNo = sowNo;
 	}
 	
-	public List<SowDetailsInfo> getSowDetailsInfoList() {
+	
+	public InvoiceDetailsInfo getSowInfo() {
+		return sowInfo;
+	}
+	public void setSowInfo(InvoiceDetailsInfo sowInfo) {
+		this.sowInfo = sowInfo;
+	}
+	public List<InvoiceDetailsInfo> getSowDetailsInfoList() {
 		return sowDetailsInfoList;
 	}
-	public void setSowDetailsInfoList(List<SowDetailsInfo> sowDetailsInfoList) {
+	public void setSowDetailsInfoList(List<InvoiceDetailsInfo> sowDetailsInfoList) {
 		this.sowDetailsInfoList = sowDetailsInfoList;
 	}
-	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

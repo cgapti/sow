@@ -13,9 +13,11 @@ import org.springframework.stereotype.Repository;
 
 import com.sow.dao.AbstractDao;
 import com.sow.dao.InvoiceDAO;
+import com.sow.exception.CustomException;
 import com.sow.exception.SOWException;
 import com.sow.model.Invoice;
 import com.sow.model.SOW;
+import com.sow.model.JSON.InvoiceDetailsInfo;
 import com.sow.model.JSON.InvoiceInfo;
 import com.sow.model.JSON.SowDetailsInfo;
 
@@ -25,10 +27,12 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 
 	public InvoiceInfo viewInvoice(Invoice invoice) throws SOWException {
 		System.out.println("InvoiceDAOImpl - viewInvoice method starts");
-
+		boolean errorStatus=false;
 		Session session = null; 
 		Transaction trans = null;
-		InvoiceInfo invoiceInfo = null; 
+		InvoiceInfo invoiceInfo = null;
+		CustomException exp = new CustomException();
+		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 
@@ -38,16 +42,15 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 					+ invoice.getSowNo() + "'";
 			SQLQuery query = session.createSQLQuery(sql);
 			List<Object[]> results = query.list();
-			System.out.println("queryList::" + results.size());
+			System.out.println("queryList::" + results.size());			
+			List<InvoiceDetailsInfo> sowDetailsInfoList = new ArrayList<InvoiceDetailsInfo>();
 			invoiceInfo = new InvoiceInfo();
-			SowDetailsInfo sowDetails = new SowDetailsInfo();
-			List<SowDetailsInfo> sowDetailsInfoList = new ArrayList<SowDetailsInfo>();
 			for (Object[] row : results) {
+				InvoiceDetailsInfo sowDetails = new InvoiceDetailsInfo();
 				String sowNo = "";
 				if (row[0] != null && row[0] != "") {
 					sowNo = row[0].toString();
 					sowDetails.setSowNo(sowNo);
-					System.out.println("sowNo:::" + sowNo);
 				}
 				int pId = 0;
 				if (row[1] != null && row[1] != "") {
@@ -102,7 +105,7 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 				Integer invoiceNo = 0;
 				if (row[11] != null && row[11] != "") {
 					invoiceNo = Integer.parseInt(row[11].toString());
-					sowDetails.setInvoiceAmt(invoiceNo);
+					sowDetails.setInvoiceNo(invoiceNo);
 				}
 				String utlMonth = "";
 				if (row[12] != null && row[12] != "") {
@@ -117,7 +120,6 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 					sowDetails.setInvoiceDate(invoiceDate);
 				}
 				Integer invoiceAmt = 0;
-
 				if (row[14] != null && row[14] != "") {
 					invoiceAmt = Integer.parseInt(row[14].toString());
 					sowDetails.setInvoiceAmt(invoiceAmt);
@@ -160,16 +162,25 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 				}
 
 				invoiceInfo.setSowInfo(sowDetails);
+				System.out.println("results"+results.size());
+				
 				sowDetailsInfoList.add(sowDetails);
+				
+				
+				
 				invoiceInfo.setSowDetailsInfoList(sowDetailsInfoList);
-
+				
 			}
 			
 
-			trans.commit();
+				trans.commit();
 		} catch (Exception e) {
 			trans.rollback();
 			e.printStackTrace();
+			errorStatus=true;
+			exp.setErrorStatus(errorStatus);
+			exp.setErrorDesc(e.getMessage());
+			invoiceInfo.setExpception(exp);
 			throw new SOWException(
 					"Error occured while fetching the data from DB",
 					e.getMessage());
