@@ -98,5 +98,15 @@ public class SOWDAOImpl extends AbstractDao<Integer, SOW> implements
 		return sowNoSeed + 1;
 	}
 
+	public List<SOW> fetchSOWDataForExcel() throws SOWException {
+		System.out.println("SOWDAOImpl - fetchSOW method starts");
+		List<SOW> allSOW = new ArrayList<SOW>();
+		if (allSOW == null || allSOW.isEmpty()) {
+			allSOW = createListEntityCriteriaForExcel();
+		}
+		System.out.println("SOWDAOImpl - fetchSOW method ends");
+		return allSOW;
+	}
+
 	
 }

@@ -485,5 +485,22 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		}
 		return resultvalue;
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected List<SOW> createListEntityCriteriaForExcel() throws SOWException {
+		Session session = null;
+		Transaction trans = null;
+		List<SOW> sowlist = null;
+		try {
+			session = getSession();
+			trans = session.beginTransaction();
+			sowlist = session.createCriteria(SOW.class).addOrder(Order.asc("sowNo")).list();
+			trans.commit();
+		} catch (Exception e) {
+			trans.rollback();
+			throw new SOWException("Error occured:", e.getMessage());
+		}
+		return sowlist;
+	}
 
 }

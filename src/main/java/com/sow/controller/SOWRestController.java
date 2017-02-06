@@ -1,8 +1,11 @@
 package com.sow.controller;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 
 //import com.mysql.jdbc.StringUtils;
@@ -210,5 +214,15 @@ public class SOWRestController {
 		System.out
 				.println("Fetch Single SOWController - fetchOrderBook method ends");
 		return new ResponseEntity<List<SowDetailsInfo>>(obList, HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	@RequestMapping(value = "/generateExcel", method = RequestMethod.POST, headers = "Accept=application/json")
+	public Object generateExcel(@RequestBody String data, HttpServletResponse response)
+			throws SOWException, IOException {
+		data = data.substring(1, data.length()-1);
+		String[] selectedHeaderList = data.split(";");
+	    sowServiceImpl.generateExcel(selectedHeaderList);
+		return null;
 	}
 }

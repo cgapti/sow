@@ -17,5 +17,7 @@ public interface SOWDAO {
 	
 	BigDecimal currCalculation(String curtype, BigDecimal curvalue)throws SOWException;
 	
+	List<SOW> fetchSOWDataForExcel()throws SOWException;
+	
 
 }
