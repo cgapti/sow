@@ -14,6 +14,8 @@ public class InvoiceDetailsInfo implements Serializable {
 	private Integer pId;
 	private String contractNo;
 	private Integer poNo;
+	private String poNoRef;
+	private String Ref;
 	private String owner;
 	private String engmntModel;
 	private String projectDtls;
@@ -67,6 +69,18 @@ public class InvoiceDetailsInfo implements Serializable {
 	private String sowValuetoUSD;
 	
 	
+	public String getPoNoRef() {
+		return poNoRef;
+	}
+	public void setPoNoRef(String poNoRef) {
+		this.poNoRef = poNoRef;
+	}
+	public String getRef() {
+		return Ref;
+	}
+	public void setRef(String ref) {
+		Ref = ref;
+	}
 	public String getSowValuetoUSD() {
 		return sowValuetoUSD;
 	}
