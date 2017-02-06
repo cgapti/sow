@@ -91,7 +91,7 @@ public class InvoiceDetailsInfo implements Serializable {
 	public void setObRemarks(String obRemarks) {
 		this.obRemarks = obRemarks;
 	}
-	public String getInvoiceRemarks() {
+	public String getInvoiceRemarks() { 
 		return invoiceRemarks;
 	}
 	public void setInvoiceRemarks(String invoiceRemarks) {
