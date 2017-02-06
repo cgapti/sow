@@ -38,7 +38,7 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 
 			session = getSession();
 			trans = session.beginTransaction();
-			String sql = "select SM.SOW_NO,SM.PID,SM.CONTRACT_NO,SM.SOW_REMARKS,SM.PROJECT_DTLS,SM.BUSINESS_AREA,SM.OWNER,SM.CONTRACT_CURRENCY,WO.TECHM_PRJ_DESCR,WO.OB_REMARKS,INV.DIGITAL,INV.INVOICE_NO,INV.UTL_MONTH,INV.INVOICE_DATE,INV.INVOICE_AMT,INV.TAX_AMT,INV.INVOICE_TOTAL_AMT,INV.PAID_AMT,INV.PAYMENT_ID,INV.INVOICE_STATUS,INV.REMARKS from SOW_MS SM,WORK_ORDER WO,INVOICE INV WHERE SM.SOW_NO=WO.SOW_NO  AND SM.SOW_NO=INV.SOW_NO AND WO.MONTH=INV.UTL_MONTH AND INV.SOW_NO ='"
+			String sql = "select SM.SOW_NO,SM.PID,SM.CONTRACT_NO,SM.SOW_REMARKS,SM.PROJECT_DTLS,SM.BUSINESS_AREA,SM.OWNER,SM.CONTRACT_CURRENCY,WO.TECHM_PRJ_DESCR,WO.OB_REMARKS,INV.DIGITAL,INV.INVOICE_NO,INV.UTL_MONTH,INV.INVOICE_DATE,INV.INVOICE_AMT,INV.TAX_AMT,INV.INVOICE_TOTAL_AMT,INV.PAID_AMT,INV.PAYMENT_ID,INV.INVOICE_STATUS,INV.REMARKS,INV.PO_REF_NO,INV.REFERENCE from SOW_MS SM,WORK_ORDER WO,INVOICE INV WHERE SM.SOW_NO=WO.SOW_NO  AND SM.SOW_NO=INV.SOW_NO AND WO.MONTH=INV.UTL_MONTH AND INV.SOW_NO ='"
 					+ invoice.getSowNo() + "'";
 			SQLQuery query = session.createSQLQuery(sql);
 			List<Object[]> results = query.list();
@@ -160,14 +160,20 @@ public class InvoiceDAOImpl extends AbstractDao<Integer, SOW> implements
 					remarks = row[20].toString();
 					sowDetails.setInvoiceRemarks(remarks);
 				}
+				String poRefNo = "";
 
-				invoiceInfo.setSowInfo(sowDetails);
-				System.out.println("results"+results.size());
-				
-				sowDetailsInfoList.add(sowDetails);
-				
-				
-				
+				if (row[21] != null && row[21] != "") {
+					poRefNo = row[21].toString();
+					sowDetails.setPoNoRef(poRefNo);
+				}
+				String ref = "";
+
+				if (row[22] != null && row[22] != "") {
+					ref = row[22].toString();
+					sowDetails.setRef(ref);
+				}
+				invoiceInfo.setSowInfo(sowDetails);				
+				sowDetailsInfoList.add(sowDetails);				
 				invoiceInfo.setSowDetailsInfoList(sowDetailsInfoList);
 				
 			}
