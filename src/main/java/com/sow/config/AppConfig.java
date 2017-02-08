@@ -5,9 +5,7 @@ import java.util.Properties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
@@ -15,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages = "com.sow")
 public class AppConfig {
 
-	// Put Other Application configuration here.
+	/*// Put Other Application configuration here.
 	@Bean
 	public JavaMailSender getMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -36,6 +34,6 @@ public class AppConfig {
 	@Bean
 	public SimpleMailMessage getMailMessage() {
 		return new SimpleMailMessage();
-	}
+	}*/
 
 }
