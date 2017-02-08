@@ -22,9 +22,11 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sow.exception.CustomException;
 import com.sow.exception.SOWException;
 import com.sow.model.SOW;
 import com.sow.model.SOWCurrency;
+import com.sow.model.JSON.OrderBookInfo;
 import com.sow.model.JSON.SOWCurrencyInfo;
 import com.sow.model.JSON.SOWInfo;
 import com.sow.model.JSON.SowDetailsInfo;
@@ -41,7 +43,8 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	CustomException exp = new CustomException();
+	boolean errorStatus=false;
 	protected Session getSession() throws SOWException {
 		Session session = sessionFactory.getCurrentSession();
 		if (null == session) {
@@ -72,25 +75,37 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	public void saveOrUpdate(T entity) throws SOWException {
 		Session session = null;
 		Transaction trans = null;
+		SOWInfo sowInfo = new SOWInfo();
+		
 		try {
 			session = getSession();
 			trans = session.beginTransaction();
 			session.saveOrUpdate(entity);
 			trans.commit();
 		} catch (Exception e) {
-			trans.rollback();
+			errorStatus=true;
+			exp.setErrorStatus(errorStatus);
+			exp.setErrorDesc(e.getMessage());
+			sowInfo.setExpception(exp);
+			trans.rollback();			
 			throw new SOWException("Error occured:", e.getMessage());
 		}
 	}
 	public void saveOB(T entity) throws SOWException {
 		Session session = null;
 		Transaction trans = null;
+		OrderBookInfo ob = new OrderBookInfo();
+		
 		try {
 			session = getSession();
 			trans = session.beginTransaction();
 			session.save(entity);
 			trans.commit();
 		} catch (Exception e) {
+			CustomException exp = new CustomException();
+			exp.setErrorStatus(true);
+			exp.setErrorDesc(e.getMessage());
+			ob.setExpception(exp);
 			trans.rollback();
 			throw new SOWException("Error occured:", e.getMessage());
 		}
@@ -119,12 +134,18 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		Session session = null;
 		Transaction trans = null;
 		List<SOWInfo> sowlist = null;
+		SOWInfo sowInfo = new SOWInfo();	
 		try {
 			session = getSession();
 			trans = session.beginTransaction();
 			sowlist = session.createCriteria(SOW.class).addOrder(Order.asc("sowNo")).list();
 			trans.commit();
 		} catch (Exception e) {
+			
+			exp.setErrorStatus(true);
+			exp.setErrorDesc(e.getMessage());			
+			sowInfo.setExpception(exp);
+			sowlist.add(sowInfo);
 			trans.rollback();
 			throw new SOWException("Error occured:", e.getMessage());
 		}
@@ -439,6 +460,11 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 			trans.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+			CustomException exp = new CustomException();
+			exp.setErrorStatus(true);
+			exp.setErrorDesc(e.getMessage());
+			SowDetailsInfo sowList = new SowDetailsInfo();
+			sowList.setExpception(exp);
 			trans.rollback();
 			throw new SOWException("Error occured:", e.getMessage());
 		}
@@ -458,6 +484,11 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 			sowlist = cr.list();
 			trans.commit();
 		} catch (Exception e) {
+			CustomException exp = new CustomException();
+			exp.setErrorStatus(true);
+			exp.setErrorDesc(e.getMessage());
+			SOWInfo sowInfo = new SOWInfo();
+			sowInfo.setExpception(exp);
 			trans.rollback();
 			throw new SOWException("Error occured:", e.getMessage());
 		}
@@ -480,6 +511,11 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 			System.out.println("AbstractDao - calculatedResult::::::"+resultvalue);
 			trans.commit();
 		} catch (Exception e) {
+			CustomException exp = new CustomException();
+			exp.setErrorStatus(true);
+			exp.setErrorDesc(e.getMessage());
+			SOWCurrencyInfo sowCcyInfo = new SOWCurrencyInfo();
+			sowCcyInfo.setExpception(exp);
 			trans.rollback();
 			throw new SOWException("Error occured:", e.getMessage());
 		}
